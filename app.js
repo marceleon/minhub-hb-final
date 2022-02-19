@@ -1,19 +1,18 @@
 require('dotenv').config();
 
 const mongoose = require('mongoose');
-const express = require('express');
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Conexión a MongoDB establecida'))
     .catch((err) => console.log(err));
 
-const app = express();
+const express = require('express');
+const cors = require('cors');
 
-/*
-app.get('/clients', (req, res) => {
-    res.send('Hello NEW World!');
-});
-*/
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.listen(process.env.PORT, () => {
     console.log(`Example app listening on port ${process.env.PORT}`);
