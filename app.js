@@ -1,13 +1,15 @@
 require('dotenv').config();
 
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Conexión a MongoDB establecida'))
-    .catch((err) => console.log(err));
-
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const mongoDB = require('./keydb');
+
+console.log(mongoDB.URL);
+
+mongoose.connect(mongoDB.URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Conexión a MongoDB establecida'))
+    .catch((err) => console.log(err));
 
 const app = express();
 app.use(express.json());
