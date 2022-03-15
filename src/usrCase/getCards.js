@@ -1,20 +1,20 @@
 const { response } = require('express');
-const accountRepository = require('../repositories/accountRepository');
+const CardRepository = require('../repositories/cardRepository');
 
-const getAllAccounts = async (req, res = response) => {
+const getAllCards = async (req, res = response) => {
     try {
-        const accounts = await accountRepository.getAll();
-        const count = await accountRepository.count();
+        const cards = await CardRepository.getAll();
+        const count = await CardRepository.count();
 
-        if (!accounts) {
+        if (!cards) {
             return res.status(401).json({
                 message: 'Not found -- NO SE ENCONTRO',
             });
         }
 
         return res.status(200).json({
-            message: 'Account',
-            response: accounts,
+            message: 'Cards',
+            response: cards,
             total: count,
         });
     } catch (error) {
@@ -25,20 +25,24 @@ const getAllAccounts = async (req, res = response) => {
     }
 };
 
-const getAccounts = async (req, res = response) => {
+const getCards = async (req, res = response) => {
     try {
         const { id } = req.params;
-        const accounts = await accountRepository.getAccounts({ client: id });
+        const cards = await CardRepository.getCards({ client: id });
 
-        if (!accounts) {
+        console.log(id);
+        console.log(cards);
+
+        if (!cards) {
             return res.status(401).json({
                 message: 'Not found -- NO SE ENCONTRO',
             });
         }
 
         return res.status(200).json({
-            message: 'Account',
-            response: accounts,
+            message: 'Cards',
+            response: cards,
+            total: cards.count,
         });
     } catch (error) {
         return res.status(500).json({
@@ -48,21 +52,20 @@ const getAccounts = async (req, res = response) => {
     }
 };
 
-const getOneAccount = async (req, res = response) => {
+const getOneCard = async (req, res = response) => {
     try {
         const { id } = req.params;
+        const card = await CardRepository.getOne(id);
 
-        const account = await accountRepository.getOne(id);
-
-        if (!account) {
+        if (!card) {
             return res.status(401).json({
                 message: 'Not found -- NO SE ENCONTRO',
             });
         }
 
         return res.status(200).json({
-            message: 'Accounts',
-            response: account,
+            message: 'Card',
+            response: card,
         });
     } catch (error) {
         return res.status(500).json({
@@ -72,4 +75,4 @@ const getOneAccount = async (req, res = response) => {
     }
 };
 
-module.exports = { getAllAccounts, getAccounts, getOneAccount };
+module.exports = { getAllCards, getCards, getOneCard };

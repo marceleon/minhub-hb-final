@@ -5,8 +5,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const mongoDB = require('./keydb');
 
-console.log(mongoDB.URL);
-
 mongoose.connect(mongoDB.URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Conexión a MongoDB establecida'))
     .catch((err) => console.log(err));
@@ -20,4 +18,8 @@ app.listen(process.env.PORT, () => {
     console.log(`Example app listening on port ${process.env.PORT}`);
 });
 
-app.use('/api/v1', require('./src/routers/routers'));
+app.use('/api/', require('./src/routers/usrRouters'));
+app.use('/api/v1', require('./src/routers/verifyToken'), require('./src/routers/routers'));
+
+// Para TEST
+app.use('/test/v1', require('./src/routers/routers'));

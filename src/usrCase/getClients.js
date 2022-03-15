@@ -28,10 +28,6 @@ const getClients = async (req, res = response) => {
 const getOneClient = async (req, res = response) => {
     try {
         const { id } = req.params;
-
-        console.log(req.params);
-        console.log(id);
-
         const client = await clientRepository.getOne(id);
 
         if (!client) {

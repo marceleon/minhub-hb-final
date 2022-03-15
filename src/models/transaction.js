@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 const transactionSchema = new mongoose.Schema({
 
-    descrip: { type: String, default: 'N/A' },
+    type: { type: String, required: true, enum: ['D', 'C'] },
+    description: { type: String, default: 'N/A' },
     date: { type: Date, default: Date.now },
-    amonunt: { type: Number, default: 0 },
+    amount: { type: Number, default: 0 },
+    account: { type: mongoose.Schema.Types.ObjectId, ref: 'account' },
 
 });
 
-module.exports = mongoose.model('loan', transactionSchema);
+module.exports = mongoose.model('transaction', transactionSchema);
